@@ -63,6 +63,9 @@ cd cohabitify
 2. Install dependencies:
 ```bash
 npm install
+cd backend
+npm install
+cd ..
 ```
 
 3. Start the development server:
@@ -77,8 +80,61 @@ npm run dev
 Create a `.env` file in the root directory:
 
 ```env
-REACT_APP_API_URL=http://localhost:3001/api
+VITE_API_URL=http://localhost:5000
 ```
+
+Create a `backend/.env` file with the following values:
+
+```env
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/cohabitify?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-email-app-password
+ALLOWED_ORIGINS=http://localhost:5173
+NODE_ENV=development
+PORT=5000
+```
+
+## Deployment
+
+### Build and run locally in production mode
+
+1. Build the frontend:
+```bash
+npm run build
+```
+
+2. Start the backend in production mode:
+```bash
+cd backend
+npm start
+```
+
+The backend will serve the static frontend build from `dist/`.
+
+### Docker
+
+Build a Docker image for the full stack app:
+
+```bash
+docker build -t cohabitify .
+```
+
+Run the container:
+
+```bash
+docker run -p 5000:5000 --env-file backend/.env cohabitify
+```
+
+### Recommended deployment targets
+
+- Render
+- Railway
+- Fly.io
+- Vercel (with a custom Docker container)
+- Heroku
 
 ## Backend Requirements
 
@@ -166,9 +222,10 @@ src/
 ## Available Scripts
 
 - `npm run dev` - Start development server
-- `npm run build` - Build for production
+- `npm run build` - Build the frontend for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
+- `npm run start:prod` - Start the backend in production mode (after building frontend)
 
 ## Contributing
 

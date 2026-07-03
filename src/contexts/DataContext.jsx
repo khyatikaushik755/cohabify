@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Create an axios instance for API calls
-const apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+const VITE_BASE = import.meta.env.VITE_API_URL || '';
+const apiBase = VITE_BASE.trim() ? VITE_BASE.replace(/\/$/, '') : '';
 const apiClient = axios.create({
   baseURL: `${apiBase}/api`,
   withCredentials: true,
